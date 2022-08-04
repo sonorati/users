@@ -2,18 +2,21 @@ package com.seon.user;
 
 import com.seon.user.dto.UserRequestDto;
 import com.seon.user.dto.UserResponseDto;
+import com.seon.user.dto.UserSearchRequestDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
@@ -136,12 +139,84 @@ public class UserServiceTest {
         service.deleteUser(USER_ID);
     }
 
+    @Test
+    public void whenUserIdIsProvided_shouldSearchById() {
+
+        UserSearchRequestDto dto = UserSearchRequestDto.builder()
+                .id(USER_ID)
+                .build();
+
+        User userFromDB = makeUser();
+        when(repository.findById(USER_ID)).thenReturn(Optional.of(userFromDB));
+        List<UserResponseDto> users = service.searchUsers(dto);
+
+        assertThat(users).hasSize(1);
+    }
+
+    @Test
+    public void whenUserFirstNameAndSurname_shouldSearchByFirstNameAndSurname() {
+
+        UserSearchRequestDto dto = UserSearchRequestDto.builder()
+                .firstName("Steve")
+                .surname("Vai")
+                .build();
+
+        User userFromDB = makeUser();
+        when(repository.findByFirstNameContainingIgnoreCaseAndSurnameContainingIgnoreCase(dto.getFirstName(), dto.getSurname()))
+                .thenReturn(List.of(userFromDB));
+        List<UserResponseDto> users = service.searchUsers(dto);
+
+        assertThat(users).hasSize(1);
+    }
+
+    @Test
+    public void whenUserSurname_shouldSearchBySurname() {
+
+        UserSearchRequestDto dto = UserSearchRequestDto.builder()
+                .surname("Vai")
+                .build();
+
+        User userFromDB = makeUser();
+        when(repository.findBySurnameContainingIgnoreCase(dto.getSurname()))
+                .thenReturn(List.of(userFromDB));
+        List<UserResponseDto> users = service.searchUsers(dto);
+
+        assertThat(users).hasSize(1);
+    }
+    @Test
+    public void whenUserFirstName_shouldSearchByFirstName() {
+        UserSearchRequestDto dto = UserSearchRequestDto.builder()
+                .firstName("Steve")
+                .build();
+
+        User userFromDB = makeUser();
+        when(repository.findByFirstNameContainingIgnoreCase(dto.getFirstName()))
+                .thenReturn(List.of(userFromDB));
+        List<UserResponseDto> users = service.searchUsers(dto);
+
+        assertThat(users).hasSize(1);
+    }
+    @Test
+    public void whenAllAttributes_shouldSearchById() {
+        UserSearchRequestDto dto = UserSearchRequestDto.builder()
+                .id(USER_ID)
+                .firstName("Steve")
+                .surname("Vai")
+                .build();
+
+        User userFromDB = makeUser();
+        when(repository.findById(USER_ID)).thenReturn(Optional.of(userFromDB));
+        List<UserResponseDto> users = service.searchUsers(dto);
+
+        assertThat(users).hasSize(1);
+    }
+
     private static User makeUser() {
         return User.builder()
                 .id(USER_ID)
                 .title("Mr")
-                .firstName("Joe")
-                .surname("Doe")
+                .firstName("Steve")
+                .surname("Vai")
                 .jobTitle("Developer")
                 .build();
     }
