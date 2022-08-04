@@ -1,0 +1,8 @@
+language: java
+before_install:
+  - chmod +x mvnw
+  - chmod +x .mvn/wrapper/maven-wrapper.jar
+script:
+  - ./mvnw build
+  - ./mvnw test
+  - bash <(curl -s https://codecov.io/bash)
