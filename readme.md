@@ -32,8 +32,3 @@ Unit and integration tests for the service are located in the src/test package
 
 ### SwaggerUI 
 To try the APIs Swagger is available http://localhost:8080/swagger-ui/index.html
-
-## Zuul integration
-Due to Spring Cloud Netflix Projects Entering Maintenance Mode, more information here:
-https://spring.io/blog/2018/12/12/spring-cloud-greenwich-rc1-available-now#spring-cloud-netflix-projects-entering-maintenance-mode
-Zuul has been replaced for Spring Cloud Gateway
