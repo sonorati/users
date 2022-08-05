@@ -25,7 +25,7 @@ public class UserRequestDto {
     private String surname;
     @ValidateDOB
     @DateTimeFormat(pattern="dd/MM/yyyy")
-    @Schema(description = "Date of birth", example = "12/08/2000", required = true)
+    @Schema(description = "Date of birth", example = "12/08/2000")
     private String dob;
     private String jobTitle;
 
