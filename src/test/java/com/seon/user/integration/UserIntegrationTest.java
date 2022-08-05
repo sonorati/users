@@ -29,6 +29,7 @@ public class UserIntegrationTest {
             "  \"firstName\": \"Steve\",\n" +
             "  \"surname\": \"Vai\",\n" +
             "  \"jobTitle\": \"Musician\",\n" +
+            "  \"dob\": \"08/01/1950\",\n" +
             "  \"id\": \"1\" \n}";
 
     @LocalServerPort

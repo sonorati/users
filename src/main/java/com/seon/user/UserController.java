@@ -26,13 +26,13 @@ public class UserController {
 
     @PostMapping(value = "/users")
     @ResponseStatus(CREATED)
-    public UserResponseDto createUser(@Valid @RequestBody UserRequestDto user) {
+    public UserResponseDto createUser(@RequestBody @Valid UserRequestDto user) {
         return userService.saveUser(user);
     }
 
     @PutMapping(value = "/users/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<UserResponseDto> updateUser(@PathVariable UUID userId, @Valid @RequestBody UserRequestDto user) {
+    public ResponseEntity<UserResponseDto> updateUser(@PathVariable UUID userId, @RequestBody @Valid UserRequestDto user) {
         return userService.findUser(userId)
                 .map(existingUser -> ResponseEntity.ok(userService.updateUser(user, existingUser)))
                 .orElseGet(() -> new ResponseEntity<>(userService.saveUserWithId(userId, user), CREATED));

@@ -1,6 +1,13 @@
 package com.seon.user.dto;
 
-import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.seon.user.validation.ValidateDOB;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
@@ -9,11 +16,16 @@ import java.util.Objects;
 @Builder
 @Getter
 @Setter
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserRequestDto {
     private String title;
+    @NotBlank(message = "Firstname is mandatory")
     private String firstName;
     @NotBlank(message = "Surname is mandatory")
     private String surname;
+    @ValidateDOB
+    @DateTimeFormat(pattern="dd/MM/yyyy")
+    @Schema(description = "Date of birth", example = "12/08/2000", required = true)
     private String dob;
     private String jobTitle;
 
