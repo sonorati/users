@@ -41,8 +41,8 @@ public class UserServiceTest {
                 .isEqualTo(UserResponseDto.builder()
                         .id(USER_ID)
                         .title("Mr")
-                        .firstName("Joe")
-                        .surname("Doe")
+                        .firstName("Steve")
+                        .surname("Vai")
                         .jobTitle("Developer")
                         .build());
     }
@@ -58,8 +58,8 @@ public class UserServiceTest {
         assertThat(dto).isEqualTo(UserResponseDto.builder()
                 .id(USER_ID)
                 .title("Mr")
-                .firstName("Joe")
-                .surname("Doe")
+                .firstName("Steve")
+                .surname("Vai")
                 .jobTitle("Developer")
                 .build());
     }
@@ -75,8 +75,8 @@ public class UserServiceTest {
         assertThat(savedUser.get()).isEqualTo(User.builder()
                 .id(USER_ID)
                 .title("Mr")
-                .firstName("Joe")
-                .surname("Doe")
+                .firstName("Steve")
+                .surname("Vai")
                 .jobTitle("Developer")
                 .build());
     }
@@ -116,8 +116,8 @@ public class UserServiceTest {
         User user = makeUser();
         UserRequestDto dto = UserRequestDto.builder()
                 .title("Mr")
-                .firstName("Joe")
-                .surname("Doe")
+                .firstName("Steve")
+                .surname("Vai")
                 .jobTitle("Developer")
                 .build();
         when(repository.save(any(User.class))).thenReturn(user);
@@ -127,8 +127,8 @@ public class UserServiceTest {
         assertThat(updateUser).isEqualTo(UserResponseDto.builder()
                 .id(USER_ID)
                 .title("Mr")
-                .firstName("Joe")
-                .surname("Doe")
+                .firstName("Steve")
+                .surname("Vai")
                 .jobTitle("Developer")
                 .build());
     }
